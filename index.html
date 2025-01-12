@@ -7,36 +7,37 @@
     <style>
         body {
             font-family: sans-serif;
-            background-color: #f0f0f0; /* Light gray background */
-            color: #333; /* Dark gray text */
+            background-color: #f0f0f0;
+            color: #333;
             margin: 20px;
         }
 
         h1, h2 {
-            color: #007bff; /* Blue headings */
+            color: #007bff;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            border: 1px solid #ddd; /* Light gray borders */
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
 
         th {
-            background-color: #007bff; /* Blue header background */
+            background-color: #007bff;
             color: white;
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2; /* Even row background */
+            background-color: #f2f2f2;
         }
+
         .container {
             max-width: 960px;
             margin: 0 auto;
@@ -45,21 +46,22 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .explanation {
             margin-top: 20px;
             padding: 15px;
-            background-color: #e9f7ef; /* Light green background */
-            border-left: 5px solid #28a745; /* Green left border */
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
             border-radius: 5px;
         }
 
         .formula {
             font-family: monospace;
-            background-color: #f8f9fa; /* Very light gray background */
+            background-color: #f8f9fa;
             padding: 5px 10px;
             border-radius: 5px;
             margin: 5px 0;
-            overflow-x: auto; /* Enable horizontal scrolling for long formulas */
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -84,7 +86,7 @@
             <tbody></tbody>
         </table>
 
-         <div class="explanation">
+        <div class="explanation">
             <h2>Statistical Concepts</h2>
             <p>Here's a brief explanation of the statistical concepts used in player analysis:</p>
 
@@ -111,21 +113,50 @@
     </div>
 
     <script>
-        fetch('player_data.csv')
-            .then(response => response.text())
-            .then(csvData => {
-                const rows = csvData.split('\n');
-                const tableBody = document.getElementById('playerTable').getElementsByTagName('tbody')[0];
-                rows.slice(0, -1).forEach(row => { // handles potential empty last row
-                    const columns = row.split(',');
-                    const newRow = tableBody.insertRow();
-                    columns.forEach(column => {
-                        const newCell = newRow.insertCell();
-                        newCell.textContent = column;
-                    });
-                });
-            });
-    </script>
+        const playerData = [
+            {Player: "Alex Rodriguez", AVG: ".295", HR: "696", RBI: "2086"},
+            {Player: "Albert Pujols", AVG: ".296", HR: "703", RBI: "2218"},
+            {Player: "Miguel Cabrera", AVG: ".306", HR: "511", RBI: "1881"},
+            {Player: "Giancarlo Stanton", AVG: ".267", HR: "402", RBI: "1095"},
+            {Player: "Manny Ramirez", AVG: ".312", HR: "555", RBI: "1831"},
+            {Player: "CC Sabathia", AVG: ".476", HR: "0", RBI: "0"},
+            {Player: "Ken Griffey Jr.", AVG: ".284", HR: "630", RBI: "1836"},
+            {Player: "Derek Jeter", AVG: ".310", HR: "260", RBI: "1311"},
+            {Player: "Clayton Kershaw", AVG: ".241", HR: "1", RBI: "14"},
+            {Player: "Zack Greinke", AVG: ".229", HR: "9", RBI: "71"},
+            {Player: "Justin Verlander", AVG: ".226", HR: "1", RBI: "10"},
+            {Player: "Max Scherzer", AVG: ".225", HR: "2", RBI: "11"},
+            {Player: "Felix Hernandez", AVG: ".222", HR: "0", RBI: "0"},
+            {Player: "Cole Hamels", AVG: ".201", HR: "3", RBI: "11"},
+            {Player: "Cliff Lee", AVG: ".245", HR: "0", RBI: "0"},
+            {Player: "Johan Santana", AVG: ".259", HR: "0", RBI: "0"},
+            {Player: "Barry Zito", AVG: ".174", HR: "0", RBI: "0"},
+            {Player: "Mike Hampton", AVG: ".246", HR: "7", RBI: "34"},
+            {Player: "Kevin Brown", AVG: ".189", HR: "1", RBI: "10"},
+            {Player: "Randy Johnson", AVG: ".165", HR: "1", RBI: "12"},
+            {Player: "Greg Maddux", AVG: ".171", HR: "0", RBI: "0"},
+            {Player: "Roger Clemens", AVG: ".173", HR: "0", RBI: "0"},
+            {Player: "Pedro Martinez", AVG: ".214", HR: "0", RBI: "0"},
+            {Player: "Tom Glavine", AVG: ".186", HR: "0", RBI: "0"},
+            {Player: "David Price", AVG: ".250", HR: "2", RBI: "16"},
+            {Player: "Jon Lester", AVG: ".183", HR: "3", RBI: "13"},
+            {Player: "Masahiro Tanaka", AVG: ".207", HR: "0", RBI: "0"},
+            {Player: "Yu Darvish", AVG: ".192", HR: "1", RBI: "7"},
+            {Player: "Stephen Strasburg", AVG: ".224", HR: "1", RBI: "10"},
+            {Player: "Matt Cain", AVG: ".152", HR: "0", RBI: "0"},
+            {Player: "Jered Weaver", AVG: ".179", HR: "0", RBI: "0"},
+            {Player: "Tim Lincecum", AVG: ".185", HR: "0", RBI: "0"}
+        ];
 
+        const tableBody = document.getElementById('playerTable').getElementsByTagName('tbody')[0];
+
+        playerData.forEach(player => {
+            const newRow = tableBody.insertRow();
+            for (const key in player) {
+                const newCell = newRow.insertCell();
+                newCell.textContent = player[key];
+            }
+        });
+    </script>
 </body>
 </html>
