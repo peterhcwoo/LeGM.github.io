@@ -1,39 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MLB Player Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLB Player Compensation Analysis</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark gray text */
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #007bff; /* Blue headings */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        th, td {
+            border: 1px solid #ddd; /* Light gray borders */
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff; /* Blue header background */
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Even row background */
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef; /* Light green background */
+            border-left: 5px solid #28a745; /* Green left border */
+            border-radius: 5px;
+        }
+
+        .formula {
+            font-family: monospace;
+            background-color: #f8f9fa; /* Very light gray background */
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            overflow-x: auto; /* Enable horizontal scrolling for long formulas */
+        }
+    </style>
 </head>
 <body>
-    <h1>MLB Player Statistics</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Player</th>
-                <th>AVG</th>
-                <th>HR</th>
-                <th>RBI</th>
-            </tr>
-        </thead>
-        <tbody id="playerTableBody">
-            </tbody>
-    </table>
+    <div class="container">
+        <h1>MLB Top Paid Players Analysis</h1>
+
+        <div class="explanation">
+            <p>This website displays data for some of the highest-paid MLB players of all time, along with explanations of the statistical concepts used in player evaluation.</p>
+        </div>
+
+        <h2>Player Data</h2>
+        <table id="playerTable">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>AVG</th>
+                    <th>HR</th>
+                    <th>RBI</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+         <div class="explanation">
+            <h2>Statistical Concepts</h2>
+            <p>Here's a brief explanation of the statistical concepts used in player analysis:</p>
+
+            <h3>Z-score</h3>
+            <p>A z-score tells you how many standard deviations a data point is from the mean. The formula is:</p>
+            <div class="formula">z = (x - μ) / σ</div>
+            <p>Where:</p>
+            <ul>
+                <li><code>x</code>: The data point</li>
+                <li><code>μ</code>: The mean</li>
+                <li><code>σ</code>: The standard deviation</li>
+            </ul>
+
+            <h3>Standard Deviation</h3>
+            <p>Standard deviation measures the spread of data. The sample standard deviation formula is:</p>
+            <div class="formula">s = sqrt[ Σ(xi - x̄)² / (n - 1) ]</div>
+            <p>Where:</p>
+            <ul>
+                <li><code>xi</code>: Each data point</li>
+                <li><code>x̄</code>: The sample mean</li>
+                <li><code>n</code>: The number of data points</li>
+            </ul>
+        </div>
+    </div>
+
     <script>
-        fetch('player_data.csv') // Fetch the CSV file
+        fetch('player_data.csv')
             .then(response => response.text())
             .then(csvData => {
                 const rows = csvData.split('\n');
-                const tableBody = document.getElementById('playerTableBody');
-                rows.slice(1).forEach(row => { // Skip header row
+                const tableBody = document.getElementById('playerTable').getElementsByTagName('tbody')[0];
+                rows.slice(0, -1).forEach(row => { // handles potential empty last row
                     const columns = row.split(',');
-                    const tableRow = document.createElement('tr');
+                    const newRow = tableBody.insertRow();
                     columns.forEach(column => {
-                        const tableCell = document.createElement('td');
-                        tableCell.textContent = column;
-                        tableRow.appendChild(tableCell);
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = column;
                     });
-                    tableBody.appendChild(tableRow);
                 });
             });
     </script>
+
 </body>
 </html>
