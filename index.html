@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MLB Player Data</title>
+</head>
+<body>
+    <h1>MLB Player Statistics</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>AVG</th>
+                <th>HR</th>
+                <th>RBI</th>
+            </tr>
+        </thead>
+        <tbody id="playerTableBody">
+            </tbody>
+    </table>
+    <script>
+        fetch('player_data.csv') // Fetch the CSV file
+            .then(response => response.text())
+            .then(csvData => {
+                const rows = csvData.split('\n');
+                const tableBody = document.getElementById('playerTableBody');
+                rows.slice(1).forEach(row => { // Skip header row
+                    const columns = row.split(',');
+                    const tableRow = document.createElement('tr');
+                    columns.forEach(column => {
+                        const tableCell = document.createElement('td');
+                        tableCell.textContent = column;
+                        tableRow.appendChild(tableCell);
+                    });
+                    tableBody.appendChild(tableRow);
+                });
+            });
+    </script>
+</body>
+</html>
